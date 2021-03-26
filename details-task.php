@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
                 <div class="row h-100">
-                    <div class="col-8 px-4">
+                    <div class="col-8 px-4 detailtask">
                         <div class="task-header">
                             <span class="bi bi-calendar-date"><text-muted> <?php echo date("l, d M Y", strtotime($row['created_at']));?></span><text-muted> oleh <?php echo $row['created_by']; ?></text-muted>
                             <div class="py-2">
@@ -29,6 +29,14 @@
                         <div class="progress">
                             <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <?php echo $row['percentage']; ?>%" aria-valuenow="<?php echo $row['percentage']; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $row['percentage']; ?>%</div>
                         </div>
+                        <?php
+                            if($row['file']!=null){
+                        ?>
+                        <div class="upload py-2">
+                            <a href="<?php echo $row['file']; ?>" download>
+                            <span class="bi bi-download"></span>Unduh berkas</a>
+                        </div>
+                        <?php } ?>
                     </div>
                     <div class="col-4 updates">
                         <div class="card">

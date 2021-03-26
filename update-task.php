@@ -118,7 +118,7 @@
                                     $query_run = mysqli_query($config, $query);
                                     while($row = mysqli_fetch_array($query_run)){
                                 ?>
-                                <form action="update-task-query.php" method="POST">
+                                <form action="update-task-query.php" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" class="form-control" name="task_id" value="<?php echo $row['task_id'];?>">
                                     <div class="task-header d-flex">
                                         <h5 class="font-weight-bold"><?php echo $row['nama_task']; ?></h5>
@@ -148,9 +148,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="comment">
-                                        <label>Komentar</label>
-                                        <textarea class="form-control" placeholder="Updated task details (optional)" name="comment"><?php echo $row['comment'];?></textarea>
+                                    <div class="row px-3">
+                                        <div class="comment col-6">
+                                            <label>Komentar</label>
+                                            <textarea class="form-control" placeholder="Detail tugas yang sudah diperbarui (opsional)" name="comment"><?php echo $row['comment'];?></textarea>
+                                        </div>
+                                        <div class="col-6 py-3">
+                                            <label>Pilih berkas:</label>
+                                            <input type="file" name="berkas" />
+                                        </div>                                        
                                     </div>
                                     <div class="update-progress d-flex py-2">
                                         <label class="pr-2">Persentase :</label>

@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <script src="js/daypilot/daypilot-all.min.js"></script>
 </head>
 
 <body>
@@ -200,7 +202,7 @@
                     </div>
                 </div>
                 <div class="row px-0 pb-3">
-                    <div class="col-6 mt-1 pt-2 d-flex">
+                    <div class="col-7 mt-1 pt-2 d-flex">
                         <div class="card card-body color-card superadmin">
                             <div class="card-body chart">
                                 <h6 class="card-title">Presensi</h6>
@@ -211,6 +213,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-5 mt-1 pt-2 pl-1 d-flex">
+                        <div class="card card-body color-card superadmin">
+                            <div class="card-body chart">
+                                <h6 class="card-title pb-5">Kalender</h6>
+                                <div id="nav" style="margin: 0 auto;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -277,6 +288,20 @@
                         }
                     }
                 });
+    </script>
+
+    <script type="text/javascript">
+
+        var nav = new DayPilot.Navigator("nav");
+        nav.showMonths = 1;
+        nav.skipMonths = 1;
+        nav.onTimeRangeSelected = function (args) {
+        dp.startDate = args.day;
+        dp.update();
+        loadEvents();
+        };
+        nav.init();
+
     </script>
 </body>
 </html>

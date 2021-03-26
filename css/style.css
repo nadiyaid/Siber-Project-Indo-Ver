@@ -751,9 +751,11 @@ button.close:focus, button.close:active{
     width: 50rem;
 }
 
-.taskModal .modal-content {
-    height: 100%;
-} 
+.taskModal .modal-body .detailtask{
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 27rem;
+}
 
 .taskModal .modal-body .col-8 h5{
     font-weight: 600;
@@ -846,6 +848,11 @@ button.close:focus, button.close:active{
 .taskModal .modal-body .progbar{  
     display: flex;
     margin-top: 1rem;
+}
+
+.taskModal .upload span{
+    font-size: 20pt;
+    padding-right: 1rem;
 }
 
 .modal-footer button{
@@ -1265,7 +1272,7 @@ button.close:focus, button.close:active{
 }
 
 .update-task .task-date .todate{
-    margin-left: 10%;
+    margin-left: 25%;
 }
 
 .update-task textarea{
