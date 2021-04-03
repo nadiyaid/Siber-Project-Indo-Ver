@@ -12,7 +12,7 @@
                 echo "<script language='javascript'>alert('Anda sudah melakukan presensi hari ini')</script>";
             }
         }
-
+// nadiya cantik
         if ($checked == false) {
             $waktu_masuk = date('H:i:s');
             $waktu_pulang = date('H:i:s');
