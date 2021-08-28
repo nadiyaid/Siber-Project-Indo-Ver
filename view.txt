@@ -1,0 +1,255 @@
+create or replace view v_monthly_report as
+select a.nip,
+a.nama,
+B.tanggal,
+	CASE WHEN DAY(B.tanggal) = 1 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '1',
+	CASE WHEN DAY(B.tanggal) = 2 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '2',
+	CASE WHEN DAY(B.tanggal) = 3 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '3',
+	CASE WHEN DAY(B.tanggal) = 4 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '4',
+	CASE WHEN DAY(B.tanggal) = 5 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '5',
+	CASE WHEN DAY(B.tanggal) = 6 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '6',
+	CASE WHEN DAY(B.tanggal) = 7 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '7',
+	CASE WHEN DAY(B.tanggal) = 8 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '8',
+	CASE WHEN DAY(B.tanggal) = 9 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '9',
+	CASE WHEN DAY(B.tanggal) = 10 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '10',
+	CASE WHEN DAY(B.tanggal) = 11 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '11',
+	CASE WHEN DAY(B.tanggal) = 12 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '12',
+	CASE WHEN DAY(B.tanggal) = 13 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '13',
+	CASE WHEN DAY(B.tanggal) = 14 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '14',
+	CASE WHEN DAY(B.tanggal) = 15 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '15',
+	CASE WHEN DAY(B.tanggal) = 16 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '16',
+	CASE WHEN DAY(B.tanggal) = 17 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '17',
+	CASE WHEN DAY(B.tanggal) = 18 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '18',
+	CASE WHEN DAY(B.tanggal) = 19 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '19',
+	CASE WHEN DAY(B.tanggal) = 20 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '20',
+	CASE WHEN DAY(B.tanggal) = 21 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '21',
+	CASE WHEN DAY(B.tanggal) = 22 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '22',
+	CASE WHEN DAY(B.tanggal) = 23 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '23',
+	CASE WHEN DAY(B.tanggal) = 24 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '24',
+	CASE WHEN DAY(B.tanggal) = 25 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '25',
+	CASE WHEN DAY(B.tanggal) = 26 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '26',
+	CASE WHEN DAY(B.tanggal) = 27 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '27',
+	CASE WHEN DAY(B.tanggal) = 28 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '28',
+	CASE WHEN DAY(B.tanggal) = 29 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '29',
+	CASE WHEN DAY(B.tanggal) = 30 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '30',
+	CASE WHEN DAY(B.tanggal) = 31 then 
+		CASE 
+		    WHEN b.stat = '' then 'P'
+		    WHEN b.stat = 'late' then 'L'
+		    WHEN b.stat = 'absent' then 'A'
+		    ELSE 'X'
+		END
+ 	END AS '31'
+from karyawan a
+join absensi b
+	on a.nip = b.nip

@@ -141,7 +141,7 @@
                                                 <?php echo date("j M", strtotime($row['start_date'])); ?> - 
                                                 <?php echo date("j M", strtotime($row['end_date'])); ?>
 
-                                                <div class="assign" style="margin-left: auto;" data-toggle="tooltip" title="Assign to" data-trigger="hover" data-placement="bottom">
+                                                <div class="assign" style="margin-left: auto;" data-toggle="tooltip" title="Ditujukan untuk" data-trigger="hover" data-placement="bottom">
                                                     <!-- <a href="#"class="userPopover"><img src="img/img4.png" alt="" width="30" height="30" style="border-radius: 50%;"></a> -->
                                                     <p><?php echo $row['nama']; ?></p>
                                                 </div>
@@ -300,7 +300,7 @@
                                                 <?php echo date("j M", strtotime($row['start_date'])); ?> - 
                                                 <?php echo date("j M", strtotime($row['end_date'])); ?>
 
-                                                <div class="assign" style="margin-left: auto;" data-toggle="tooltip" title="Assign to" data-trigger="hover" data-placement="bottom">
+                                                <div class="assign" style="margin-left: auto;" data-toggle="tooltip" title="Ditujukan untuk" data-trigger="hover" data-placement="bottom">
                                                     <!-- <a href="#"class="userPopover"><img src="img/img4.png" alt="" width="30" height="30" style="border-radius: 50%;"></a> -->
                                                     <p><?php echo $row['nama']; ?></p>
                                                 </div>

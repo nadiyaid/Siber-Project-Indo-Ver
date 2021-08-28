@@ -49,7 +49,7 @@ include('koneksi.php');
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
 </head>
-<body>
+<body background="img/bg.png">
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     
@@ -106,7 +106,7 @@ include('koneksi.php');
                 </div>
 
                 <div class="form-group">
-                <input type="password" name="confirm" class="form-control" placeholder="Confirm Password" required>
+                <input type="password" name="confirm" class="form-control" placeholder="Ulangi Kata Sandi" required>
                 </div>
 
                 <input type="submit" class="login" value="Daftar" name="register"></input>

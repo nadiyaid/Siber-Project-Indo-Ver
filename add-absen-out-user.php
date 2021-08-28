@@ -8,7 +8,7 @@
         $update = mysqli_query($config, $sql);
 
         if($update){
-            echo "Successfully added";
+            echo "Berhasil ditambahkan!";
             header("location:attendance.php");
         }
         else{

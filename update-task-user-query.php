@@ -19,16 +19,12 @@
         }
 
         $task_id = $_POST['task_id'];
-        $deskripsi = $_POST['deskripsi'];
         $comment = $_POST['comment'];
-        $from = $_POST['from'];
-        $todate = $_POST['todate'];
-        $totime = $_POST['totime'];
         $status = $_POST['status'];
         $progress = $_POST['progress'];
         $file = $dirUpload.$namaFile;
 
-        $query = "UPDATE task SET deskripsi = '$deskripsi', start_date = '$from', end_date = '$todate', end_time = '$totime', status = '$status', comment = '$comment', updated_at = CURRENT_TIMESTAMP, percentage = '$progress', file = '$file' WHERE task_id = '$task_id'";
+        $query = "UPDATE task SET status = '$status', comment = '$comment', updated_at = CURRENT_TIMESTAMP, percentage = '$progress', file = '$file' WHERE task_id = '$task_id'";
         mysqli_query($config, $query) or die(mysqli_error($config));
 
         header("location: task.php");

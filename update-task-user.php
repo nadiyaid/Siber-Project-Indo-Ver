@@ -107,7 +107,7 @@
                                         die("Connection failed: ".$config->connect_error);
                                     }
 
-                                    $query = "SELECT* FROM task WHERE task_id = '$_GET[task_id]'";
+                                    $query = "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON karyawan.nip=task.nip WHERE task_id = '$_GET[task_id]'";
                                     $query_run = mysqli_query($config, $query);
                                     while($row = mysqli_fetch_array($query_run)){
                                 ?>
@@ -115,6 +115,7 @@
                                     <input type="hidden" class="form-control" name="task_id" value="<?php echo $row['task_id'];?>">
                                     <div class="task-header d-flex">
                                         <h5 class="font-weight-bold"><?php echo $row['nama_task']; ?></h5>
+
                                         <div class="created" style="margin-left:auto;">
                                             <span class="bi bi-calendar-date"><text-muted> <?php echo date("l, d M Y", strtotime($row['created_at']));?></span><text-muted> oleh <?php echo $row['created_by']; ?></text-muted>
                                         </div>
@@ -125,19 +126,19 @@
                                     </div>
                                     <p class="tooltip-test" title="Task Description"></p>
                                     <div class="form-group deskripsi">
-                                        <textarea class="form-control a" name="deskripsi"><?php echo $row['deskripsi']; ?></textarea>
+                                        <textarea class="form-control a" name="deskripsi" readonly><?php echo $row['deskripsi']; ?></textarea>
                                     </div>
                                     <div class="form-group d-flex task-date">
                                         <div class="fromdate">
                                             <label class="col-form-label">Tanggal mulai:</label>
-                                            <input type="date" class="form-control" id="task-date" name="from" value="<?php echo $row['start_date'];?>">
+                                            <input type="date" class="form-control" id="task-date" name="from" value="<?php echo $row['start_date'];?>" readonly>
                                         </div>
                                         <div class="todate">
                                             <label class="col-form-label">Tenggat waktu:</label>
                                             <div class="datetime d-flex">
-                                                <input type="date" class="form-control" id="task-date" name="todate" value="<?php echo $row['end_date'];?>">
+                                                <input type="date" class="form-control" id="task-date" name="todate" value="<?php echo $row['end_date'];?>" readonly>
 
-                                                <input type="time" class="form-control mx-2" id="task-date" name="totime" value="<?php echo $row['end_time'];?>">
+                                                <input type="time" class="form-control mx-2" id="task-date" name="totime" value="<?php echo $row['end_time'];?>"readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -150,19 +151,32 @@
                                             <label>Pilih berkas:</label>
                                             <input type="file" name="berkas" />
                                         </div>                                        
-                                    </div>
-                                    <div class="update-progress d-flex py-2">
-                                        <label class="pr-2">Persentase :</label>
-                                        <input type="number" class="form-control" name="progress" value="<?php echo $row['percentage']; ?>">%
+                                    </div> 
+                                    <div class="row">
+                                        <div class="update-progress col-6 d-flex py-2">
+                                            <label class="pr-2">Persentase :</label>
+                                            <input type="number" class="form-control" name="progress" value="<?php echo $row['percentage']; ?>">%
+                                        </div>
+                                        <div class="col-6 seluser">
+                                            <label>Ditujukan untuk:</label>
+                                            <select class="form-control" name="nip" disabled>
+                                            <option value="<?php echo $row['nip']; ?>"><?php echo $row['nama']; ?></option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="selstatus d-flex py-2">
                                         <label class="pr-2">Status:</label>
                                         <div class="col-3">
-                                            <select class="form-control" name="status">
-                                                <option value="<?php echo $row['status'];?>"><?php echo $row['status'];?></option>
-                                                <option value="Belum dikerjakan">Belum dikerjakan</option>
-                                                <option value="Dalam pengerjaan">Dalam pengerjaan</option>
-                                                <option value="Selesai">Selesai</option>
+                                            <select class="form-control" name="status" required>
+                                                <option selected></option>
+                                                <?php
+                                                    $status = mysqli_query($config, "SELECT DISTINCT status FROM task");
+                                                    while ($fetch = mysqli_fetch_array($status)) {
+                                                ?>
+                                                    <option value="<?php echo $fetch['status']; ?>"><?php echo $fetch['status']; ?></option>
+                                                <?php
+                                                    }  
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -171,7 +185,7 @@
                                         <button type="submit" name="updatetask" class="btn btn-primary" onclick="update()">Perbarui</button>
                                         <script>
                                             function update(){
-                                                alert ("Successfully updated!");
+                                                alert ("Berhasil diperbarui!");
                                             }
                                         </script>
                                     </div>

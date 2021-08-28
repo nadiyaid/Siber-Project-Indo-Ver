@@ -94,7 +94,7 @@
                     <button type="button" id="sidebarCollapse" class="btn">
                         <span class="bi bi-list"></span>
                     </button>
-                    <b class="menu">Dasbor Super Admin</b>
+                    <b class="menu">Dasbor</b>
                 </h5>
 
                 <!-- <div class="search-wrapper">
@@ -120,36 +120,32 @@
                         <div class="card informasi" style="border: none;">
                             <div class="card-header pt-4">
                                 <h5 class="card-title">Informasi</h5>
-                                <text-muted class="card-text">Karyawan yang tidak masuk</text-muted>
+                                <text-muted class="card-text">Karyawan yang WFH</text-muted>
                             </div>
                             <div class="card-body py-0 tabinfo">
                                 <table class="table table-hover approved">
                                     <thead>
                                         <tr>
                                             <th>NAMA</th>
-                                            <th style="width:1px;">POSISI</th>
-                                            <th style="padding-left:4rem;">KETERANGAN</th>
-                                            <th style="text-align:center;">TANGGAL</th>
+                                            <th>POSISI</th>
                                             <th>AKSI</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                        $query = "SELECT request.*, karyawan.nama, karyawan.posisi FROM request INNER JOIN karyawan ON request.nip=karyawan.nip WHERE (request.approval='approve' AND request.dari_tanggal=CURDATE()) or (request.approval='approve' AND request.sampai_tanggal=CURDATE()) or (request.approval='approve' AND request.dari_tanggal is null) or (request.approval='approve' AND request.sampai_tanggal is null)";
+                                        $query = "SELECT karyawan.*, absensi.* FROM absensi INNER JOIN karyawan ON absensi.nip=karyawan.nip WHERE absensi.stat='' AND absensi.tanggal=CURDATE() or absensi.stat='late' AND absensi.tanggal=CURDATE()";
                                         $query_run = mysqli_query($config, $query);
                                         while($row = mysqli_fetch_array($query_run)){
                                     ?>
                                         <tr>
                                             <td><?php echo $row['nama']; ?></td>
                                             <td><text-muted><?php echo $row['posisi']; ?></text-muted></td>
-                                            <td style="text-align:center;"><?php echo $row['keterangan']; ?></td>
-                                            <td style="text-align:center;"><?php echo !isset($row['dari_tanggal']) ? '' : date("d/n/y",strtotime($row['dari_tanggal'])); ?> - <?php echo !isset($row['sampai_tanggal']) ? '' : date("d/n/y", strtotime($row['sampai_tanggal'])); ?>
                                             <td class="details-btn">
-                                                <button type="button" class="btn btn-info detbtn" data-toggle="modal" data-target="#approved<?php echo $row['request_id']; ?>">Ubah</button>
+                                                <button type="button" class="btn btn-info detbtn" data-toggle="modal" data-target="#editPresensi<?php echo $row['absen_id']; ?>">Ubah</button>
                                             </td>
                                         </tr>
                                         <?php
-                                            include 'approved.php';
+                                            include 'edit-presensi.php';
                                             }
                                         ?> 
                                     </tbody>
@@ -159,50 +155,26 @@
                     </div>
                     <div class="col-5 pl-1 d-flex">
                         <div class="card approval flex-fill">
-                            <h6 class="card-header">Butuh Persetujuan</h6>
-                            <div class="card-body pt-2">
-                                <div class="scrollable">
-                                    <?php
-                                        $query = "SELECT request.*, karyawan.nama, karyawan.posisi FROM request INNER JOIN karyawan ON request.nip=karyawan.nip WHERE approval=''";
-                                        $query_run = mysqli_query($config, $query);
-                                        while($row = mysqli_fetch_array($query_run)){
-                                    ?>
-                                        <div class="row newreq">
-                                            <div class="col-12">
-                                                <div class="card" style="cursor:pointer;" data-toggle="modal" data-target="#appRequest<?php echo $row['request_id']; ?>">
-                                                    <div class="card-body">
-                                                        <div class="d-flex">
-                                                            <h6><b><?php echo $row['nama']; ?></b></h6>
-                                                            <a onClick="javascript:hapus($(this));return false;" class="delreq" href="del-request2.php?request_id=<?php echo $row['request_id']; ?>" title="delete request"><span class="bi bi-x"></span></a>
-                                                        </div>
-                                                        <p><?php echo $row['keterangan']; ?></p>
-
-                                                        <script>
-                                                            function hapus(anchor) {
-                                                                var r = confirm("Apakah Anda yakin ingin menghapus permohonan ini?");
-                                                                if (r) {
-                                                                    window.location=anchor.attr("href");
-                                                                }
-                                                            }   
-                                                        </script>
-                                                        <div class="footer text-muted">
-                                                            <?php echo !isset($row['dari_tanggal']) ? '' : date("j/n/y",strtotime($row['dari_tanggal'])); ?> - <?php echo !isset($row['sampai_tanggal']) ? '' : date("j/n/y", strtotime($row['sampai_tanggal'])); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php
-                                        include 'approve-request.php';
-                                        }
-                                    ?>
-                                </div>
+                            <h6 class="card-header">Kalender</h6>
+                                <div class="card-body chart">
+                                <div id="nav" style="margin: 0 auto;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row px-0 pb-3">
-                    <div class="col-7 mt-1 pt-2 d-flex">
+                    <div class="col-7 mt-1 pt-2">
+                        <div class="card informasi color-card superadmin">
+                            <div class="card-header pt-4">
+                                <h6 class="card-title">Presensi</h6>
+                                <text-muted class="card-text">Karyawan dalam seminggu</text-muted>
+                            </div>
+                            <div class="divchart">
+                                <canvas id="pie" height="100" width="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-7 mt-1 pt-2 d-flex">
                         <div class="card card-body color-card superadmin">
                             <div class="card-body chart">
                                 <h6 class="card-title">Presensi</h6>
@@ -212,16 +184,7 @@
                                 <canvas id="pie" height="100" width="200"></canvas>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-5 mt-1 pt-2 pl-1 d-flex">
-                        <div class="card card-body color-card superadmin">
-                            <div class="card-body chart">
-                                <h6 class="card-title pb-5">Kalender</h6>
-                                <div id="nav" style="margin: 0 auto;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -239,55 +202,50 @@
 
     <script>
         // Pie Chart
-                var ctx = document.getElementById('pie').getContext('2d');
-                var chart = new Chart(ctx, {
-                    // The type of chart we want to create
-                    type: 'pie',
-                    backgroundColor: '#6a6a6a',
-                
-                    // The data for our dataset
-                    data: {
-                        labels: ['hadir', 'izin', 'sakit', 'cuti', 'unpaid'],
-                        datasets: [{
-                            label: 'Absensi',
-                            data: [
-                            <?php
-                            $hadir = mysqli_query($config, "select waktu_masuk from absensi");
-                            echo mysqli_num_rows($hadir);
-                            ?>,
+        var ctx = document.getElementById('pie').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'pie',
+            backgroundColor: '#6a6a6a',
+        
+            // The data for our dataset
+            data: {
+                labels: ['hadir', 'terlambat', 'absen'],
+                datasets: [{
+                    label: 'Presensi',
+                    data: [
+                    <?php
+                    $hadir = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 8 and stat = ''");
+                    echo mysqli_num_rows($hadir);
+                    ?>,
 
-                            <?php
-                            $izin = mysqli_query($config, "select * from request where status_ketidakhadiran = '1'");
-                            echo mysqli_num_rows($izin);
-                            ?>,
+                    <?php
+                    $late = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 8 and stat = 'late'");
+                    echo mysqli_num_rows($late);
+                    ?>,
 
-                            <?php
-                            $sakit = mysqli_query($config, "select * from request where status_ketidakhadiran = '2'");
-                            echo mysqli_num_rows($sakit);
-                            ?>,
-
-                            <?php
-                            $cuti = mysqli_query($config, "select * from request where status_ketidakhadiran = '3'");
-                            echo mysqli_num_rows($cuti);
-                            ?>
-                            ],
-                            backgroundColor: ['#79D2DE','#FFC83A','#f7f725','#A660FF','#FF6A6A'],
-                            borderColor: ['#79D2DE','#FFC83A','#f7f725','#A660FF','#FF6A6A']
-                        }]
-                    },
-                
-                    // Configuration options go here
-                    options: {
-                        legend:{
-                            display: true,
-                            position: 'bottom',
-                            labels:{
-                                fontSize: 11,
-                                boxWidth: 10,
-                            }
-                        }
+                    <?php
+                    $absen = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 8 and stat = 'absent'");
+                    echo mysqli_num_rows($absen);
+                    ?>
+                    ],
+                    backgroundColor: ['#79D2DE','#FFC83A', '#FF6A6A'],
+                    borderColor: ['#79D2DE','#FFC83A', '#FF6A6A']
+                }]
+            },
+        
+            // Configuration options go here
+            options: {
+                legend:{
+                    display: true,
+                    position: 'bottom',
+                    labels:{
+                        fontSize: 11,
+                        boxWidth: 10,
                     }
-                });
+                }
+            }
+        });
     </script>
 
     <script type="text/javascript">

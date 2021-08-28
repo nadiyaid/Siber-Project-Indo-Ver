@@ -167,17 +167,29 @@
                                             die("Connection failed: ".$config->connect_error);
                                         }
 
-                                        $query = "SELECT absen_id, tanggal, waktu_masuk, waktu_pulang, date_format(jam_kerja, '%H:%i') as jam_kerja FROM absensi WHERE nip = '$_GET[nip]'";
+                                        $query = "SELECT absen_id, tanggal, waktu_masuk, waktu_pulang, stat, stat_out, date_format(jam_kerja, '%H:%i') as jam_kerja FROM absensi WHERE nip = '$_GET[nip]'";
                                         $query_run = mysqli_query($config, $query);
                                         while($row = mysqli_fetch_array($query_run)){
                                     ?>
                                         <tr>
                                             <td><?php $tgl = $row['tanggal'];
-                                                echo date("d-M", strtotime($tgl));
+                                                echo date("d-M-Y", strtotime($tgl));
                                                 ?>
                                             </td>
-                                            <td><?php echo $row['waktu_masuk']; ?></td>
-                                            <td><?php echo $row['waktu_pulang']; ?></td>
+                                            <td><?php echo $row['waktu_masuk']; ?> <br>
+                                                <text-muted><?php echo $row['stat']; ?><text-muted>
+                                            </td>
+                                            <td><?php echo $row['waktu_pulang']; ?><br>
+                                                <text-muted>
+                                                    <?php
+                                                    $timeout = $row['waktu_pulang'];
+                                                    $timein = $row['waktu_masuk'];
+                                                    if($row['jam_kerja'] < date('H:i:s', strtotime($timein.'+8 hours')) && $timeout != null or $row['stat_out']== 'absent'){
+                                                    echo $row['stat_out'];
+                                                    }
+                                                    ?>                                                    
+                                                <text-muted>
+                                            </td>
                                             <td><?php echo $row['jam_kerja']; ?> Jam</td>
                                             <td class="details-btn">
                                                 <a href="del-att.php?absen_id=<?php echo $row['absen_id']; ?>" class="btn btn-danger del-att" onClick="javascript:hapus($(this));return false;">Hapus</a>

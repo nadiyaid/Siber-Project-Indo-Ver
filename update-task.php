@@ -114,7 +114,7 @@
                                         die("Connection failed: ".$config->connect_error);
                                     }
 
-                                    $query = "SELECT* FROM task WHERE task_id = '$_GET[task_id]'";
+                                    $query = "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON karyawan.nip=task.nip WHERE task_id = '$_GET[task_id]'";
                                     $query_run = mysqli_query($config, $query);
                                     while($row = mysqli_fetch_array($query_run)){
                                 ?>
@@ -158,24 +158,45 @@
                                             <input type="file" name="berkas" />
                                         </div>                                        
                                     </div>
-                                    <div class="update-progress d-flex py-2">
-                                        <label class="pr-2">Persentase :</label>
-                                        <input type="number" class="form-control" name="progress" value="<?php echo $row['percentage']; ?>">
+                                    <div class="row">
+                                        <div class="update-progress col-6 d-flex py-2">
+                                            <label class="pr-2">Persentase :</label>
+                                            <input type="number" class="form-control" name="progress" value="<?php echo $row['percentage']; ?>">%
+                                        </div>
+                                        <div class="col-6 seluser">
+                                            <label>Ditujukan untuk:</label>
+                                            <select class="form-control" name="nip" required>
+                                            <option value="<?php echo $row['nip']?>"><?php echo $row['nama']?></option>
+                                            <?php
+                                                $q_subt = mysqli_query($config, "SELECT * FROM karyawan");
+                                                while ($data_subt = mysqli_fetch_array($q_subt)) {
+                                            ?>
+                                                <option value="<?php echo $data_subt['nip']; ?>"><?php echo $data_subt['nama']; ?></option>
+                                            <?php
+                                                }  
+                                            ?>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="selstatus d-flex py-2">
                                         <label class="pr-2">Status:</label>
-                                        <div class="col-3">
-                                            <select class="form-control" name="status">
-                                                <option value="<?php echo $row['status'];?>"><?php echo $row['status'];?></option>
-                                                <option value="Belum dikerjakan">Belum dikerjakan</option>
-                                                <option value="Dalam pengerjaan">Dalam pengerjaan</option>
-                                                <option value="Selesai">Selesai</option>
+                                        <div class="col-4">
+                                            <select class="form-control" name="status" required>
+                                            <option selected></option>
+                                            <?php
+                                                $status = mysqli_query($config, "SELECT DISTINCT status FROM task");
+                                                while ($fetch = mysqli_fetch_array($status)) {
+                                            ?>
+                                                <option value="<?php echo $fetch['status']; ?>"><?php echo $fetch['status']; ?></option>
+                                            <?php
+                                                }  
+                                            ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="button-footer d-flex px-5">
                                         <a href="javascript:history.go(-1)" class="btn btn-close">Tutup</a>
-                                        <button type="submit" name="updatetask" class="btn btn-primary" onClick="javascript:alert ('Successfully updated!')">Perbarui</button>
+                                        <button type="submit" name="updatetask" class="btn btn-primary" onClick="javascript:alert ('Berhasil diperbarui!')">Perbarui</button>
                                     </div>
                                 </form>
                             </div>

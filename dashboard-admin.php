@@ -84,7 +84,7 @@
                     <button type="button" id="sidebarCollapse" class="btn">
                         <span class="bi bi-list"></span>
                     </button>
-                    <b class="menu">Dasbor Admin</b>
+                    <b class="menu">Dasbor</b>
                 </h5>
 
                 <!-- <div class="search-wrapper">
@@ -110,29 +110,25 @@
                         <div class="card informasi" style="border: none;">
                             <div class="card-header pt-4">
                                 <h5 class="card-title">Informasi</h5>
-                                <text-muted class="card-text">Karyawan yang tidak masuk</text-muted>
+                                <text-muted class="card-text">Karyawan yang sedang WFH</text-muted>
                             </div>
                             <div class="card-body py-0 tabinfo scrollable">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>NAMA</th>
-                                            <th style="width:1px;">POSISI</th>
-                                            <th style="text-align:center;">KETERANGAN</th>
-                                            <th style="text-align:center;">TANGGAL</th>
+                                            <th>POSISI</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                        $query = "SELECT karyawan.nama, karyawan.posisi, request.status_ketidakhadiran, request.keterangan, date_format(request.dari_tanggal, '%e/%c/%y') as dari_tanggal, date_format(request.sampai_tanggal, '%e/%c/%y')as sampai_tanggal, request.approval FROM request INNER JOIN karyawan ON request.nip=karyawan.nip WHERE request.approval='approve' AND request.dari_tanggal=CURDATE() or request.sampai_tanggal=CURDATE() or request.dari_tanggal is null or request.sampai_tanggal is null";
+                                        $query = "SELECT karyawan.nama, karyawan.posisi, absensi.tanggal, absensi.stat FROM absensi INNER JOIN karyawan ON absensi.nip=karyawan.nip WHERE absensi.stat='' AND absensi.tanggal=CURDATE() or absensi.stat='late' AND absensi.tanggal=CURDATE()";
                                         $query_run = mysqli_query($config, $query);
                                         while($row = mysqli_fetch_array($query_run)){
                                     ?>
-                                        <tr style="text-align:center;">
+                                        <tr>
                                             <td><?php echo $row['nama']; ?></td>
                                             <td><text-muted><?php echo $row['posisi']; ?></text-muted></td>
-                                            <td ><?php echo $row['keterangan']; ?></td>
-                                            <td><?php echo $row['dari_tanggal']; ?> - <?php echo $row['sampai_tanggal']; ?></td>
                                         </tr>
                                         <?php
                                             }
@@ -154,7 +150,7 @@
                                             <th>JUDUL</th>
                                             <th>DESKRIPSI</th>
                                             <th>DIBUAT</th>
-                                            <th class="px-4">TENGGAT</th>
+                                            <th>TENGGAT</th>
                                             <th>STATUS</th>
                                             <th>AKSI</th>
                                         </tr>
@@ -173,7 +169,7 @@
                                             <td><?php echo $row['nama_task']; ?></td>
                                             <td><?php echo $row['deskripsi']; ?></td>
                                             <td><?php echo date("d M", strtotime($row['created_at'])); ?></td>
-                                            <td class="pl-3"><?php echo date("j M", strtotime($row['end_date'])); ?></td>
+                                            <td><?php echo date("j M", strtotime($row['end_date'])); ?></td>
                                             <td class="indikator"><?php echo $row['status']; ?></td>
                                             <td class="details-btn">
                                                 <button type="button" class="btn btn-info detbtn" data-toggle="modal" data-target="#taskModal<?php echo $row['task_id']; ?>">Detail</button>
@@ -194,7 +190,7 @@
                         <div class="card card-body color-card admin">
                             <div class="card-body chart">
                                 <h6 class="card-title py-0">Presensi</h6>
-                                <text-muted>Rekapitulasi presensi Anda selama 30 hari</text-muted>                                
+                                <text-muted>Rekapitulasi presensi Anda bulan ini</text-muted>                                
                             </div>
                             <div class="divchart">
                                 <canvas id="pie" height="100" width="150"></canvas>
@@ -251,32 +247,27 @@
         
             // The data for our dataset
             data: {
-                labels: ['hadir', 'izin', 'sakit', 'cuti', 'unpaid'],
+                labels: ['hadir', 'terlambat', 'absen'],
                 datasets: [{
-                    label: 'Absensi',
+                    label: 'Presensi',
                     data: [
                     <?php
-                    $hadir = mysqli_query($config, "select waktu_masuk from absensi where nip = '$_SESSION[id]'");
+                    $hadir = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 8 and stat = '' and nip = '$_SESSION[id]'");
                     echo mysqli_num_rows($hadir);
                     ?>,
 
                     <?php
-                    $izin = mysqli_query($config, "select * from request where status_ketidakhadiran = '1' and nip = '$_SESSION[id]'");
-                    echo mysqli_num_rows($izin);
+                    $late = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 8 and stat = 'late' and nip = '$_SESSION[id]'");
+                    echo mysqli_num_rows($late);
                     ?>,
 
                     <?php
-                    $sakit = mysqli_query($config, "select * from request where status_ketidakhadiran = '2' and nip = '$_SESSION[id]'");
-                    echo mysqli_num_rows($sakit);
-                    ?>,
-
-                    <?php
-                    $cuti = mysqli_query($config, "select * from request where status_ketidakhadiran = '3' and nip = '$_SESSION[id]'");
-                    echo mysqli_num_rows($cuti);
+                    $absen = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 8 and stat = 'absent' and nip = '$_SESSION[id]'");
+                    echo mysqli_num_rows($absen);
                     ?>
                     ],
-                    backgroundColor: ['#79D2DE','#FFC83A','#f7f725','#A660FF','#FF6A6A'],
-                    borderColor: ['#79D2DE','#FFC83A','#f7f725','#A660FF','#FF6A6A']
+                    backgroundColor: ['#79D2DE','#FFC83A', '#FF6A6A'],
+                    borderColor: ['#79D2DE','#FFC83A', '#FF6A6A']
                 }]
             },
         

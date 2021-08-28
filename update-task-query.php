@@ -26,11 +26,13 @@
         $totime = $_POST['totime'];
         $status = $_POST['status'];
         $progress = $_POST['progress'];
+        $nip = $_POST['nip'];
         $file = $dirUpload.$namaFile;
-
-        $query = "UPDATE task SET deskripsi = '$deskripsi', start_date = '$from', end_date = '$todate', end_time = '$totime', status = '$status', comment = '$comment', updated_at = CURRENT_TIMESTAMP, percentage = '$progress', file = '$file' WHERE task_id = '$task_id'";
+        
+        $query = "UPDATE task SET deskripsi = '$deskripsi', start_date = '$from', end_date = '$todate', end_time = '$totime', status = '$status', comment = '$comment', updated_at = CURRENT_TIMESTAMP, percentage = '$progress', file = '$file', nip ='$nip' WHERE task_id = '$task_id'";
         mysqli_query($config, $query) or die(mysqli_error($config));
 
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header("location: task-admin.php");
+        // header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 ?>

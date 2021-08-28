@@ -12,7 +12,7 @@
         $add = mysqli_query($config, $sql);
 
         if($add){
-            echo "New user successfully added";
+            echo "Berhasil menambahkan karyawan!";
             header("location:manage-user.php");
         }
         else{

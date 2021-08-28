@@ -105,7 +105,7 @@
                         <div class="header undone-task px-2">
                             <h5>Belum Dikerjakan</h5>
                             <div class="underline"></div>
-                            <!-- <a href="#" class="btn" style="border-radius: 50%; margin-left: 10em;margin-top:-10px;padding: 5px 5px; font-size: 15pt; vertical-align: middle;">+</a> -->
+                            <a href="#" class="btn" style="border-radius: 50%; margin-left: 10em;margin-top:-10px;padding: 5px 5px; font-size: 15pt; vertical-align: middle;"></a>
                         </div>
                         <div class="card taskundone" data-toggle="modal" data-target="#taskModal<?php echo $row['task_id']; ?>">
                             <div class="card-body tasklist">
@@ -156,7 +156,7 @@
                                         die("Connection failed: ".$config->connect_error);
                                     }
 
-                                    $query = "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON task.nip=karyawan.nip WHERE status = 'progress' AND task.nip = '$_SESSION[id]'";
+                                    $query = "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON task.nip=karyawan.nip WHERE status = 'Dalam pengerjaan' AND task.nip = '$_SESSION[id]'";
                                     $query_run = mysqli_query($config, $query);
                                     while($row = mysqli_fetch_array($query_run)){
                                 ?>
@@ -198,7 +198,7 @@
                                         die("Connection failed: ".$config->connect_error);
                                     }
 
-                                    $query =  "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON task.nip=karyawan.nip WHERE status = 'done' AND task.nip = '$_SESSION[id]'";
+                                    $query =  "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON task.nip=karyawan.nip WHERE status = 'Selesai' AND task.nip = '$_SESSION[id]'";
                                     $query_run = mysqli_query($config, $query);
                                     while($row = mysqli_fetch_array($query_run)){
                                 ?>

@@ -8,7 +8,7 @@
         $update = mysqli_query($config, $sql);
 
         if($update){
-            echo "Successfully added";
+            echo "Presensi keluar berhasil!";
             header("location:attendance-superadmin.php");
         }
         else{

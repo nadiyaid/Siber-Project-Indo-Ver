@@ -114,7 +114,7 @@
 
             <div class="container manage-attendance">
                 <div class="row mt-4">
-                    <div class="col-12">
+                    <div class="col">
                         <div class="dropdown">
                             <button class="btn btn-select dropdown-toggle2" type="button" data-toggle="dropdown">Pilih Karyawan
                             <span class="bi bi-caret-down-fill"></span></button>
@@ -133,91 +133,46 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div class="row pt-4 pb-2">
-                    <div class="col-6 d-flex">
-                        <div class="card approval flex-fill">
-                            <h6 class="card-header">Butuh Persetujuan</h6>
-                            <div class="card-body pt-2">
-                                <div class="scrollable">
-                                    <?php
-                                        $query = "SELECT request.*, karyawan.nama, karyawan.posisi FROM request INNER JOIN karyawan ON request.nip=karyawan.nip WHERE approval=''";
-                                        $query_run = mysqli_query($config, $query);
-                                        while($row = mysqli_fetch_array($query_run)){
-                                    ?>
-                                    <div class="row newreq">
-                                        <div class="col-12">
-                                            <div class="card" style="cursor:pointer;" data-toggle="modal" data-target="#appRequest<?php echo $row['request_id']; ?>">
-                                                <div class="card-body">
-                                                    <div class="d-flex">
-                                                        <h6><b><?php echo $row['nama']; ?></b></h6>
-                                                        <a onClick="javascript:hapus($(this));return false;" class="delreq" href="del-request.php?request_id=<?php echo $row['request_id']; ?>" title="delete request"><span class="bi bi-x"></span></a>
-                                                    </div>
-
-                                                    <script>
-                                                        function hapus(anchor) {
-                                                            var r = confirm("Apakah Anda yakin ingin menghapus permohonan ini?");
-                                                            if (r) {
-                                                                window.location=anchor.attr("href");
-                                                            }
-                                                        }   
-                                                    </script>
-                                                    <p><?php echo $row['keterangan']; ?></p>
-                                                    <div class="footer text-muted">
-                                                        <?php echo !isset($row['dari_tanggal']) ? '' : date("j/n/y",strtotime($row['dari_tanggal'])); ?> - <?php echo !isset($row['sampai_tanggal']) ? '' : date("j/n/y", strtotime($row['sampai_tanggal'])); ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php
-                                        include 'approve-request.php';
-                                        }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-auto">
+                        <a target="_blank" href="print.php" class="btn btn-select print" type="button">Cetak Laporan
+                            <span class="bi bi-printer-fill"></span></a>
                     </div>
-                    <div class="col-6 pl-1">
-                        <div class="card informasi" style="border: none;">
-                            <div class="card-header pt-4">
-                                <h5 class="card-title">Permohonan yang Ditolak</h5>
-                                <text-muted class="card-text">minggu ini</text-muted>
-                            </div>
-                            <div class="card-body py-0 tabinfo scrollable">
-                                <table class="table table-hover declined">
-                                    <thead>
-                                        <tr>
-                                            <th>NAMA</th>
-                                            <th style="width:1px;">POSISI</th>
-                                            <th style="text-align:center;">KETERANGAN</th>
-                                            <th style="text-align:center;">TANGGAL</th>
-                                            <th style="padding-left:3rem;">AKSI</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                </div>               
+                <div class="col-12 pb-2 pt-4">
+                    <div class="card informasi" style="border: none;">
+                        <div class="card-header pt-4">
+                            <h5 class="card-title">Data Presensi</h5>
+                            <text-muted class="card-text">bulan ini</text-muted>
+                        </div>
+                        <div class="card-body py-0 tabinfo scrollable">
+                            <table class="table table-hover declined">
+                                <thead>
+                                    <tr>
+                                        <th>NAMA</th>
+                                        <th>POSISI</th>
+                                        <th>TANGGAL</th>
+                                        <th style="text-align:center;">STATUS KEHADIRAN</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                    $query = "SELECT absensi.*, karyawan.nama, karyawan.posisi FROM absensi INNER JOIN karyawan ON absensi.nip=karyawan.nip WHERE MONTH(tanggal) = 8";
+                                    
+                                    $query_run = mysqli_query($config, $query);
+                                    while($row = mysqli_fetch_array($query_run)){
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row['nama']; ?></td>
+                                        <td><?php echo $row['posisi']; ?></td>
+                                        <td><?php echo $row['tanggal']; ?></td>
+                                        <td style="text-align:center;"><?php echo $row['stat']; ?></td>
+                                    </tr>
                                     <?php
-                                        $query = "SELECT request.*, karyawan.nama, karyawan.posisi FROM request INNER JOIN karyawan ON request.nip=karyawan.nip WHERE approval='decline' AND request.tanggal_request BETWEEN SUBDATE(CURDATE(), 7) AND CURDATE() OR approval='decline' AND DATE(request.updated_at) = CURDATE()";
-                                        
-                                        $query_run = mysqli_query($config, $query);
-                                        while($row = mysqli_fetch_array($query_run)){
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $row['nama']; ?></td>
-                                            <td><text-muted><?php echo $row['posisi']; ?></text-muted></td>
-                                            <td style="text-align:center;"><?php echo $row['keterangan']; ?></td>
-                                            <td style="text-align:center;"><?php echo !isset($row['dari_tanggal']) ? '' : date("d/n/y",strtotime($row['dari_tanggal'])); ?> - <?php echo !isset($row['sampai_tanggal']) ? '' : date("d/n/y", strtotime($row['sampai_tanggal'])); ?>
-                                            <td class="details-btn" style="text-align:end;">
-                                                <button data-toggle="modal" data-target="#appDecline<?php echo $row['request_id']; ?>" class="btn btn-info detbtn">Ubah</button>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                            include 'approve-decline.php';
-                                            }
-                                        ?> 
-                                    </tbody>
-                                </table>                                
-                            </div>
+                                        include 'approve-decline.php';
+                                        }
+                                    ?> 
+                                </tbody>
+                            </table>                                
                         </div>
                     </div>
                 </div>

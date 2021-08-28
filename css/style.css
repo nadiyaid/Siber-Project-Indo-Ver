@@ -558,7 +558,7 @@ header label span{
 }
 
 .appRequest .app-button{
-    padding-left: 12rem;
+    padding-left: 20rem;
 }
 
 .approved .app-button{
@@ -914,6 +914,10 @@ button.close:focus, button.close:active{
     display: none;
 }
 
+text-muted.time{
+    align-content: center;
+}
+
 .btn-checkin{
     display:block;
     margin-left: auto;
@@ -923,8 +927,8 @@ button.close:focus, button.close:active{
     border: none;
     margin-right: .5rem;
     color: white;
-    padding: 10px;
-    height: fit-content;
+    padding: 10px 20px 10px 20px;
+    /* height: fit-content; */
     margin-top: auto;
     
 }
@@ -940,12 +944,12 @@ button.close:focus, button.close:active{
 
 .btn-checkout{
     display:block;
-    padding: 10px;
+    padding: 10px 20px 10px 20px;
     font-size: 13px;
     outline: none;
     background-color:#EF5350;
     border: none;
-    height: fit-content;
+    /* height: fit-content; */
     margin-top: auto;
 }
 
@@ -997,6 +1001,11 @@ button.close:focus, button.close:active{
 .manage-attendance .btn-select{
     background-color:#39ace7;
     color: white;
+    font-size: 11pt;
+}
+
+.manage-attendance .btn-select.print{
+    
 }
 
 .btn-select:hover{
@@ -1283,7 +1292,7 @@ button.close:focus, button.close:active{
 }
 
 .update-task .update-progress input[type="number"]{
-    width: 10%;
+    width: 20%;
     height: 1.5rem;
     font-size: 10pt;
     border-top: none;
@@ -1340,9 +1349,20 @@ input::-webkit-inner-spin-button {
     
 }
 
+.seluser select{
+    font-size: 11pt;
+    padding: 2px;
+    width: 19rem;
+}
+
+.seluser select:focus{
+    padding: 7px 6px;
+}
+
 .selstatus select{
     font-size: 11pt;
     padding: 2px;
+    width: 13rem;
 }
 
 .selstatus select:focus{

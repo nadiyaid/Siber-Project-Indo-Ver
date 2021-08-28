@@ -197,7 +197,6 @@
                                     <img src="img/img.png" class="img-fluid rounded-circle mb-3" alt="">
                                     <h4><?php echo $row['nama'];?> / <?php echo $row['username']; ?></h4>
                                     <h5 class="card-text"><?php echo $row['posisi'];?></h5>
-                                    <p>Tentang</p>
                                 </div>
                             </div>
                         </div>

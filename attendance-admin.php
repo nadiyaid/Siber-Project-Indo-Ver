@@ -113,12 +113,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body d-flex">
-                                <a href="add-request-admin-query.php" type="button" class="btn btn-info btn-request" data-toggle="modal" data-target="#requestModal">
-                                    <div class="maintext">Permohonan</div>
-                                    <div class="subtext">untuk izin</div>
-                                </a>
+                                <text-muted class="align-items-center d-flex"><b> <?php echo date("D, j M, G:i:s");?></b> </text-muted>
                                 <a href="add-absen-admin.php" id="hide" type="button" class="btn btn-checkin" name="checkin">Masuk</a>
-                                <a href="add-absen-out-admin.php" type="button" class="btn btn-danger btn-checkout" onclick="checkout()">Keluar</a>
+                                <a href="add-absen-out-admin.php" id="checkout" type="button" class="btn btn-danger btn-checkout" onClick="javascript:checkout($(this));return false;">Keluar</a>
                                 
                                 <script>
                                     function checkout(anchor) {
@@ -155,17 +152,29 @@
                                             die("Connection failed: ".$config->connect_error);
                                         }
 
-                                        $query = "SELECT tanggal, waktu_masuk, waktu_pulang, date_format(jam_kerja, '%H:%i') as jam_kerja FROM absensi WHERE nip = '$_SESSION[id]'";
+                                        $query = "SELECT tanggal, waktu_masuk, waktu_pulang, stat, stat_out, date_format(jam_kerja, '%H:%i') as jam_kerja FROM absensi WHERE nip = '$_SESSION[id]'";
                                         $query_run = mysqli_query($config, $query);
                                         while($row = mysqli_fetch_array($query_run)){
                                     ?>
                                         <tr>
                                             <td><?php $tgl = $row['tanggal'];
-                                                echo date("d-M", strtotime($tgl));
+                                                echo date("d-M-Y", strtotime($tgl));
                                                 ?>
                                             </td>
-                                            <td><?php echo $row['waktu_masuk']; ?></td>
-                                            <td><?php echo $row['waktu_pulang']; ?></td>
+                                            <td><?php echo $row['waktu_masuk']; ?> <br>
+                                                <text-muted><?php echo $row['stat']; ?><text-muted>
+                                            </td>
+                                            <td><?php echo $row['waktu_pulang']; ?> <br>
+                                                <text-muted>
+                                                    <?php
+                                                    $timeout = $row['waktu_pulang'];
+                                                    $timein = $row['waktu_masuk'];
+                                                    if($row['jam_kerja'] < date('H:i:s', strtotime($timein.'+8 hours')) && $timeout != null or $row['stat_out']== 'absent'){
+                                                    echo $row['stat_out'];
+                                                    }
+                                                    ?>                                                    
+                                                <text-muted>
+                                            </td>
                                             <td><?php echo $row['jam_kerja']; ?> Jam</td>
                                         </tr>
 
@@ -173,8 +182,8 @@
                                             $keluar = $row['waktu_pulang'];
                                             $time = $row['waktu_masuk'];
                                             $current_time = date('H:i:s');
-
-                                            if($current_time >= date('H:i:s', strtotime($time.'+9 hours')) && $keluar == null){
+                                            
+                                            if($current_time >= date('H:i:s', strtotime($time.'+9 hours')) && $keluar == null && $time !=null){
                                                 $masuk = date('H:i:s', strtotime($row['waktu_masuk'].'+9 hours'));
                                                 $sql = "UPDATE absensi SET waktu_pulang = '$masuk', jam_kerja = TIMEDIFF(waktu_pulang, waktu_masuk), updated_at = CURRENT_TIMESTAMP WHERE waktu_pulang is null AND nip = '$_SESSION[id]'";
                                                 $update = mysqli_query($config, $sql) or die(mysqli_error($config));
