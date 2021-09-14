@@ -19,7 +19,7 @@
             $waktu_pulang = date('H:i:s');
             $nip = $_SESSION['id'];
 
-            $sql = "INSERT INTO absensi (absen_id, tanggal, waktu_masuk, waktu_pulang, jam_kerja, stat, updated_at, nip) VALUES (0, CURDATE(), NOW(), null, TIMEDIFF('$waktu_pulang', '$waktu_masuk'), 'hadir', CURRENT_TIMESTAMP,'$nip')";
+            $sql = "INSERT INTO absensi (absen_id, tanggal, waktu_masuk, waktu_pulang, jam_kerja, stat, stat_kerja, updated_at, nip) VALUES (0, CURDATE(), NOW(), null, TIMEDIFF('$waktu_pulang', '$waktu_masuk'), '', 'WFH', CURRENT_TIMESTAMP,'$nip')";
             $add = mysqli_query($config, $sql);
 
             if($add){
@@ -36,7 +36,7 @@
             $waktu_pulang = date('H:i:s');
             $nip = $_SESSION['id'];
 
-            $sql = "INSERT INTO absensi (absen_id, tanggal, waktu_masuk, waktu_pulang, jam_kerja, stat, updated_at, nip) VALUES (0, CURDATE(), NOW(), null, TIMEDIFF('$waktu_pulang', '$waktu_masuk'), 'late', CURRENT_TIMESTAMP,'$nip')";
+            $sql = "INSERT INTO absensi (absen_id, tanggal, waktu_masuk, waktu_pulang, jam_kerja, stat, stat_kerja, updated_at, nip) VALUES (0, CURDATE(), NOW(), null, TIMEDIFF('$waktu_pulang', '$waktu_masuk'), 'late', 'WFH', CURRENT_TIMESTAMP,'$nip')";
             $add = mysqli_query($config, $sql);
 
             if($add){

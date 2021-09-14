@@ -33,14 +33,10 @@
                         <label class="col-form-label col-3">Status Kehadiran</label>
                         <div class="col-9">
                             <select class="form-control" name="status" id="status">
-                                <?php
-                                    $q_subt = mysqli_query($config, "SELECT DISTINCT stat FROM absensi");
-                                    while ($data_subt = mysqli_fetch_array($q_subt)) {
-                                ?>
-                                    <option value="<?php echo $data_subt['stat']; ?>"><?php echo $data_subt['stat']; ?></option>
-                                <?php
-                                    }  
-                                ?>                             
+                                <option value="<?php echo $row['stat']; ?>"></option>
+                                <option value="late">Terlambat</option>
+                                <option value="absent">Absen</option>
+                                <option value="">Hadir</option>
                             </select>
                         </div>
                     </div>                                             

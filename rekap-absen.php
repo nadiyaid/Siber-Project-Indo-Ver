@@ -167,7 +167,7 @@
                                             die("Connection failed: ".$config->connect_error);
                                         }
 
-                                        $query = "SELECT absen_id, tanggal, waktu_masuk, waktu_pulang, stat, stat_out, date_format(jam_kerja, '%H:%i') as jam_kerja FROM absensi WHERE nip = '$_GET[nip]'";
+                                        $query = "SELECT absensi.absen_id, absensi.tanggal, absensi.waktu_masuk, absensi.waktu_pulang, absensi.stat, absensi.stat_out, date_format(absensi.jam_kerja, '%H:%i') as jam_kerja, karyawan.* FROM absensi INNER JOIN karyawan ON absensi.nip=karyawan.nip WHERE karyawan.nip = '$_GET[nip]' ORDER BY tanggal DESC";
                                         $query_run = mysqli_query($config, $query);
                                         while($row = mysqli_fetch_array($query_run)){
                                     ?>
@@ -187,12 +187,14 @@
                                                     if($row['jam_kerja'] < date('H:i:s', strtotime($timein.'+8 hours')) && $timeout != null or $row['stat_out']== 'absent'){
                                                     echo $row['stat_out'];
                                                     }
-                                                    ?>                                                    
+                                                    ?> 
                                                 <text-muted>
                                             </td>
                                             <td><?php echo $row['jam_kerja']; ?> Jam</td>
                                             <td class="details-btn">
-                                                <a href="del-att.php?absen_id=<?php echo $row['absen_id']; ?>" class="btn btn-danger del-att" onClick="javascript:hapus($(this));return false;">Hapus</a>
+                                                <button data-toggle="modal" data-target="#editPresensi<?php echo $row['absen_id']; ?>" class="btn btn-info detbtn">Ubah</button>
+
+                                                <a href="del-att.php?absen_id=<?php echo $row['absen_id']; ?>" class="btn del-att" onClick="javascript:hapus($(this));return false;">Hapus</a>
                                                 <script>
                                                     function hapus(anchor) {
                                                         var r = confirm("Apakah Anda yakin ingin menghapus data ini?");
@@ -205,6 +207,7 @@
                                         </tr>
                                         
                                         <?php
+                                            include 'edit-presensi.php';
                                             }
                                         ?>   
                                     </tbody>

@@ -4,7 +4,7 @@ session_start();
 include 'validation.php';
 require('tcpdf/tcpdf.php');
 		
-	$bulan = '8';
+	$bulan = '9';
 	$tahun = '2021'; 
 
 	$tgl = 1;
@@ -40,7 +40,7 @@ require('tcpdf/tcpdf.php');
 	$pdf->Write(0, '', '', 0, 'L', true, 0, false, false, 0);
 	$pdf->Write(0, '', '', 0, 'L', true, 0, false, false, 0);
 			
-	$pdf->SetFont('helvetica', '', 8);
+	$pdf->SetFont('helvetica', '', 10);
 			
 	$sql = "SELECT A.nip, A.nama,
 				group_concat(A.1) as '1', group_concat(A.2) as '2',
@@ -59,7 +59,7 @@ require('tcpdf/tcpdf.php');
 				group_concat(A.27) as '27', group_concat(A.28) as '28',
 				group_concat(A.29) as '29', group_concat(A.30) as '30',
 				group_concat(A.31) as '31'
-				from v_monthly_report as A
+				from v_monthly_report2 as A
 				WHERE MONTH(tanggal) = '".$bulan."' AND YEAR(tanggal) = '".$tahun."' group by A.nip";
 	$run = mysqli_query($config, $sql);
 
@@ -83,7 +83,7 @@ EOD;
 			$no = 1;
 			while ($isi = mysqli_fetch_array($run)) {
 				$tbl.="	 	 	
-					<tr style='text-align:center'>
+					<tr style=\"text-align:center\">
 						<td>".$no."</td>
 						<td>".$isi['nip']."</td>
 						<td valign='top' style='white-space:nowrap'>".$isi['nama']."</td>
@@ -140,11 +140,37 @@ EOD;
 					$tbl .="</tr>";
 					$no++;
 				}
-			$tbl.="</table>";
+
+				$tbl.="</table>";
+				$tbl .= "
+					<table>
+						<tr>
+							<td> Keterangan : </td>
+						</tr>
+						<tr>
+							<td> P-H : Present WFH</td>
+						</tr>
+						<tr>
+							<td> L-H : Late WFH</td>
+						</tr>
+						<tr>
+							<td> A-H : Absent WFH</td>
+						</tr>
+						<tr>
+							<td> P-O : Present WFO</td>
+						</tr>
+						<tr>
+							<td> L-O : Late WFO</td>
+						</tr>
+						<tr>
+							<td> A-O : Absent WFO</td>
+						</tr>
+					</table>
+					";
 			$pdf->writeHTML($tbl, true, false, false, false, '');
 
-            $pdf->Cell(130 ,4,'Keterangan',0,0);
-					
+            // $pdf->Cell(130 ,4,'Keterangan',0,0);
+
 			$namaPDF = 'Laporan Presensi Bulanan_'.$bulan.'_'.$tahun.'.pdf';
 			$pdf->Output($namaPDF,'I');
 ?>

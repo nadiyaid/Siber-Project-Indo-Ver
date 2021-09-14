@@ -13,12 +13,13 @@
             }
         }
 
-        if($checked==false){
+        $d=strtotime("09.00");
+        if($checked==false  && date('H:i:s') <= date('H:i:s', $d)){
             $waktu_masuk = date('H:i:s');
             $waktu_pulang = date('H:i:s');
             $nip = $_SESSION['id'];
             
-            $sql = "INSERT INTO absensi (absen_id, tanggal, waktu_masuk, waktu_pulang, jam_kerja, updated_at, nip) VALUES (0, CURDATE(), NOW(), null, TIMEDIFF('$waktu_pulang', '$waktu_masuk'), CURRENT_TIMESTAMP,'$nip')";
+            $sql = "INSERT INTO absensi (absen_id, tanggal, waktu_masuk, waktu_pulang, jam_kerja, stat, stat_kerja, updated_at, nip) VALUES (0, CURDATE(), NOW(), null, TIMEDIFF('$waktu_pulang', '$waktu_masuk'), '', 'WFH', CURRENT_TIMESTAMP,'$nip')";
             $add = mysqli_query($config, $sql);
 
             if($add){
@@ -26,6 +27,23 @@
                 echo "<script language='javascript'>window.location.replace('attendance-superadmin.php'); </script>";
             }
 
+            else{
+                echo "ERROR in adding data" ;
+            }
+        }
+
+        if ($checked == false && date('H:i:s') > date('H:i:s', $d)) { 
+            $waktu_masuk = date('H:i:s');
+            $waktu_pulang = date('H:i:s');
+            $nip = $_SESSION['id'];
+
+            $sql = "INSERT INTO absensi (absen_id, tanggal, waktu_masuk, waktu_pulang, jam_kerja, stat, stat_kerja, updated_at, nip) VALUES (0, CURDATE(), NOW(), null, TIMEDIFF('$waktu_pulang', '$waktu_masuk'), 'late', 'WFH', CURRENT_TIMESTAMP,'$nip')";
+            $add = mysqli_query($config, $sql);
+
+            if($add){
+                echo "<script language='javascript'>alert('Presensi Anda terlambat!')</script>";
+                echo "<script language='javascript'>window.location.replace('attendance-superadmin.php'); </script>";
+            }
             else{
                 echo "ERROR in adding data" ;
             }

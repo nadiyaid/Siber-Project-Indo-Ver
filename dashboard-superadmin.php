@@ -215,17 +215,17 @@
                     label: 'Presensi',
                     data: [
                     <?php
-                    $hadir = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 8 and stat = ''");
+                    $hadir = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 9 and stat = ''");
                     echo mysqli_num_rows($hadir);
                     ?>,
 
                     <?php
-                    $late = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 8 and stat = 'late'");
+                    $late = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 9 and stat = 'late'");
                     echo mysqli_num_rows($late);
                     ?>,
 
                     <?php
-                    $absen = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 8 and stat = 'absent'");
+                    $absen = mysqli_query($config, "select * FROM absensi WHERE MONTH(tanggal) = 9 and stat = 'absent'");
                     echo mysqli_num_rows($absen);
                     ?>
                     ],

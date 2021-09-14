@@ -114,7 +114,7 @@
                                         die("Connection failed: ".$config->connect_error);
                                     }
 
-                                    $query = "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON task.nip=karyawan.nip WHERE status = 'Belum dikerjakan'";
+                                    $query = "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON task.nip=karyawan.nip WHERE status = 'Belum dikerjakan' ORDER BY task_id DESC";
                                     $query_run = mysqli_query($config, $query);
                                     while($row = mysqli_fetch_array($query_run)){
                                 ?>
@@ -222,7 +222,7 @@
                                         die("Connection failed: ".$config->connect_error);
                                     }
 
-                                    $query =  "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON task.nip=karyawan.nip WHERE status = 'Dalam pengerjaan'";
+                                    $query =  "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON task.nip=karyawan.nip WHERE status = 'Dalam pengerjaan' ORDER BY task_id DESC";
                                     $query_run = mysqli_query($config, $query);
                                     while($row = mysqli_fetch_array($query_run)){
                                 ?>
@@ -273,7 +273,7 @@
                                         die("Connection failed: ".$config->connect_error);
                                     }
 
-                                    $query =  "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON task.nip=karyawan.nip WHERE status = 'Selesai'";
+                                    $query =  "SELECT task.*, karyawan.nama FROM task INNER JOIN karyawan ON task.nip=karyawan.nip WHERE status = 'Selesai' ORDER BY updated_at ASC";
                                     $query_run = mysqli_query($config, $query);
                                     while($row = mysqli_fetch_array($query_run)){
                                 ?>

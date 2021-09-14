@@ -11,9 +11,13 @@
         $nip = $_POST['nip'];
 
         $query = "UPDATE karyawan SET nama = '$nama', alamat = '$alamat', posisi='$posisi', username = '$username', password = MD5('$password'), email = '$email' WHERE nip = '$nip'";
-        mysqli_query($config, $query) or die(mysqli_error($config));
+        $update=mysqli_query($config, $query);
 
-        echo "<script language='javascript'>alert('Berhasil diubah!')</script>";
-        echo "<script language='javascript'>window.location.replace('user.php'); </script>";
+        // echo "<script language='javascript'>alert('Successfully updated!')</script>";
+        // echo "<script language='javascript'>window.location.replace('user-admin.php'); </script>";
+ 
+        if($update){
+            header("Location: user.php?success=Berhasil diubah!");
+        }
     }
 ?>

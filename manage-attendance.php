@@ -156,7 +156,7 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                    $query = "SELECT absensi.*, karyawan.nama, karyawan.posisi FROM absensi INNER JOIN karyawan ON absensi.nip=karyawan.nip WHERE MONTH(tanggal) = 8";
+                                    $query = "SELECT absensi.*, karyawan.nama, karyawan.posisi FROM absensi INNER JOIN karyawan ON absensi.nip=karyawan.nip WHERE MONTH(tanggal) = 9";
                                     
                                     $query_run = mysqli_query($config, $query);
                                     while($row = mysqli_fetch_array($query_run)){

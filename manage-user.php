@@ -132,6 +132,7 @@
                                 <table class="table" id="tblUsr">
                                     <thead>
                                         <tr>
+                                            <th>NIP</th>
                                             <th>NAMA</th>
                                             <th>POSISI</th>
                                             <th>EMAIL</th>
@@ -147,12 +148,12 @@
                                             die("Connection failed: ".$connection->connect_error);
                                         }
 
-                                        $query = "SELECT * FROM karyawan";
+                                        $query = "SELECT * FROM karyawan ORDER BY nip DESC";
                                         $query_run = mysqli_query($connection, $query);
                                         while($row = mysqli_fetch_array($query_run)){
                                     ?>
                                         <tr>
-                                            <!-- <td> <img src="img/img4.png" alt="" width="40px" height="40px"> &nbsp; <?php echo $row['nama']; ?></td> -->
+                                            <td> <?php echo $row['nip']; ?></td>
                                             <td> <?php echo $row['nama']; ?></td>
                                             <td> <text-muted> <?php echo $row['posisi']; ?></text-muted></td>
                                             <td> <?php echo $row['email']; ?></td>
@@ -208,6 +209,7 @@
                                         <div class="col-10">
                                             <select class="form-control" name="posisi" id="posisi" required>
                                                 <option value=""></option>
+                                                <option value="IT Manager">IT Manager</option>
                                                 <option value="Front End">Front End</option>
                                                 <option value="Back End">Back End</option>
                                                 <option value="Mobile Apps Developer">Mobile Apps Developer</option>
@@ -275,7 +277,15 @@
         $(document).ready(function() {
             $('#tblUsr').DataTable({
                 responsive: true,
-                "pageLength": 5
+                "pageLength": 5,
+                "columnDefs": [
+                    {
+                        "targets": [ 0 ],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ],
+                "order": [[ 0, "desc" ]]
             });
         } );
     </script>

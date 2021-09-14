@@ -120,10 +120,10 @@
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body d-flex">                            
+                            <div class="card-body d-flex">
                                 <text-muted class="align-items-center d-flex"><b> <?php echo date("D, j M, G:i:s");?></b> </text-muted>
                                 <a href="add-absen.php" id="hide" type="button" class="btn btn-checkin" name="checkin">Masuk</a>
-                                <a href="add-absen-out.php"  onClick="javascript:checkout($(this));return false;" type="button" class="btn btn-danger btn-checkout" >Keluar</a>
+                                <a href="add-absen-out.php" onClick="javascript:checkout($(this));return false;" type="button" class="btn btn-danger btn-checkout" >Keluar</a>
 
                                 <script>
                                     function checkout(anchor) {
@@ -165,24 +165,24 @@
                                         $query_run = mysqli_query($config, $query);
                                         while($row = mysqli_fetch_array($query_run)){
                                     ?>
-                                        <tr>
+                                        <tr>                                            
                                             <td><?php $tgl = $row['tanggal'];
                                                 echo date("d-M-Y", strtotime($tgl));
                                                 ?>
                                             </td>
                                             <td><?php echo $row['waktu_masuk']; ?> <br>
-                                                <text-muted><?php echo $row['stat']; ?><text-muted>
+                                                <text style="color: red;"><?php echo $row['stat']; ?><text>
                                             </td>
                                             <td><?php echo $row['waktu_pulang']; ?> <br>
-                                                <text-muted>
-                                                    <?php
+                                                <text style="color: red;">
+                                                <?php
                                                     $timeout = $row['waktu_pulang'];
                                                     $timein = $row['waktu_masuk'];
                                                     if($row['jam_kerja'] < date('H:i:s', strtotime($timein.'+8 hours')) && $timeout != null or $row['stat_out']== 'absent'){
                                                     echo $row['stat_out'];
                                                     }
-                                                    ?>                                                    
-                                                <text-muted>
+                                                ?>                                                    
+                                                <text>
                                             </td>
                                             <td><?php echo $row['jam_kerja']; ?> Jam</td>
                                         </tr>
@@ -300,7 +300,8 @@
         $(document).ready(function() {
             $('#tblAtt').DataTable({
                 responsive: true,
-                "pageLength": 5
+                "pageLength": 5,
+                "order": [[ 0, "desc" ]]
             });
         } );
     </script>

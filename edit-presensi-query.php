@@ -9,9 +9,9 @@
         $status = $_POST['status'];
 
         $query = "UPDATE absensi SET stat = '$status' WHERE absen_id = '$absen_id'";
-        mysqli_query($config, $query) or die(mysqli_error());
+        mysqli_query($config, $query) or die(mysqli_error($config));
 
-        header("location: dashboard-superadmin.php");
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
 
     }
     

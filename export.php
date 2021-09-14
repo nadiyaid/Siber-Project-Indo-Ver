@@ -41,8 +41,8 @@ header("Content-Disposition: attachment; filename= Laporan Presensi.xls");
        
        });
        </script>
-                            <h5 class="card-title">Data Presensi</h5>
-                            <text-muted class="card-text">bulan ini</text-muted>
+        <h5 class="card-title">Data Presensi</h5>
+        <text-muted class="card-text">bulan ini</text-muted>
         <table class="table table-hover declined">
             <thead>
                 <tr>

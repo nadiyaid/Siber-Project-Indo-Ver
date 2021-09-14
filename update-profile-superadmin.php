@@ -11,9 +11,10 @@
         $nip = $_POST['nip'];
 
         $query = "UPDATE karyawan SET nama = '$nama', alamat = '$alamat', posisi='$posisi', username = '$username', password = MD5('$password'), email = '$email' WHERE nip = '$nip'";
-        mysqli_query($config, $query) or die(mysqli_error($config));
-
-        echo "<script language='javascript'>alert('Berhasil diubah!')</script>";
-        echo "<script language='javascript'>window.location.replace('profile-superadmin.php'); </script>";
+        $update=mysqli_query($config, $query);
+ 
+        if($update){
+            header("Location: profile-superadmin.php?success=Berhasil diubah!");
+        }
     }
 ?>

@@ -15,7 +15,7 @@
 
         // echo "<script language='javascript'>alert('Successfully updated!')</script>";
         // echo "<script language='javascript'>window.location.replace('user-admin.php'); </script>";
-
+ 
         if($update){
             header("Location: user-admin.php?success=Berhasil diubah!");
         }

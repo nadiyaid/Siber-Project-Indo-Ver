@@ -157,10 +157,10 @@
                                                 ?>
                                             </td>
                                             <td><?php echo $row['waktu_masuk']; ?> <br>
-                                                <text-muted><?php echo $row['stat']; ?><text-muted>
+                                                <text style="color: red;"><?php echo $row['stat']; ?><text>
                                             </td>
                                             <td><?php echo $row['waktu_pulang']; ?> <br>
-                                                <text-muted>
+                                                <text style="color: red;">
                                                     <?php
                                                     $timeout = $row['waktu_pulang'];
                                                     $timein = $row['waktu_masuk'];
@@ -168,7 +168,7 @@
                                                     echo $row['stat_out'];
                                                     }
                                                     ?>                                                    
-                                                <text-muted>
+                                                <text>
                                             </td>
                                             <td><?php echo $row['jam_kerja']; ?> Jam</td>
                                         </tr>
@@ -271,7 +271,8 @@
         $(document).ready(function() {
             $('#tblAtt').DataTable({
                 responsive: true,
-                "pageLength": 5
+                "pageLength": 5,
+                "order": [[ 0, "desc" ]]
             });
         } );
     </script>

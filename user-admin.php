@@ -202,7 +202,7 @@
                         </div>
                         <?php
                             require 'koneksi.php';
-                            $query = mysqli_query($config, "SELECT * FROM karyawan WHERE nip = '$_SESSION[id]'") or die(mysqli_error());
+                            $query = mysqli_query($config, "SELECT * FROM karyawan WHERE nip = '$_SESSION[id]'") or die(mysqli_error($config));
                             while($row = mysqli_fetch_array($query)){
                         ?>
                         <div class="col-md-4 py-5">

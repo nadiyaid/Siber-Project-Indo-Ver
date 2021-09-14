@@ -115,6 +115,7 @@
                             <div class="card-body d-flex">
                                 <text-muted class="align-items-center d-flex"><b> <?php echo date("D, j M, G:i:s");?></b> </text-muted>
                                 <a href="add-absen-admin.php" id="hide" type="button" class="btn btn-checkin" name="checkin">Masuk</a>
+                                
                                 <a href="add-absen-out-admin.php" id="checkout" type="button" class="btn btn-danger btn-checkout" onClick="javascript:checkout($(this));return false;">Keluar</a>
                                 
                                 <script>
@@ -152,7 +153,7 @@
                                             die("Connection failed: ".$config->connect_error);
                                         }
 
-                                        $query = "SELECT tanggal, waktu_masuk, waktu_pulang, stat, stat_out, date_format(jam_kerja, '%H:%i') as jam_kerja FROM absensi WHERE nip = '$_SESSION[id]'";
+                                        $query = "SELECT tanggal, waktu_masuk, waktu_pulang, stat, stat_out,date_format(jam_kerja, '%H:%i') as jam_kerja FROM absensi WHERE nip = '$_SESSION[id]'";
                                         $query_run = mysqli_query($config, $query);
                                         while($row = mysqli_fetch_array($query_run)){
                                     ?>
@@ -162,10 +163,10 @@
                                                 ?>
                                             </td>
                                             <td><?php echo $row['waktu_masuk']; ?> <br>
-                                                <text-muted><?php echo $row['stat']; ?><text-muted>
+                                                <text style="color: red;"><?php echo $row['stat']; ?><text>
                                             </td>
                                             <td><?php echo $row['waktu_pulang']; ?> <br>
-                                                <text-muted>
+                                                <text style="color: red;">
                                                     <?php
                                                     $timeout = $row['waktu_pulang'];
                                                     $timein = $row['waktu_masuk'];
@@ -173,7 +174,7 @@
                                                     echo $row['stat_out'];
                                                     }
                                                     ?>                                                    
-                                                <text-muted>
+                                                <text>
                                             </td>
                                             <td><?php echo $row['jam_kerja']; ?> Jam</td>
                                         </tr>
@@ -272,12 +273,20 @@
         </div>
     </div>
     <!--/#wrapper-->
-
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    
     <script>
         $(document).ready(function() {
             $('#tblAtt').DataTable({
                 responsive: true,
-                "pageLength": 5
+                "pageLength": 5,
+                "order": [[ 0, "desc" ]]
             });
         } );
     </script>

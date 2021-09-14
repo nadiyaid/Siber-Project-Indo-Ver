@@ -9,7 +9,7 @@
         $role = $_POST['role'];
 
         $query = "UPDATE karyawan SET nama = '$nama', posisi = '$posisi', email = '$email', role = '$role' WHERE nip = '$nip'";
-        mysqli_query($config, $query) or die(mysqli_error());
+        mysqli_query($config, $query) or die(mysqli_error($config));
 
         header("location: manage-user.php");
 
